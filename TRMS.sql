@@ -1,55 +1,64 @@
+--EMPLOYEES TABLE
 CREATE TABLE EMPLOYEES(
 EMPLOYEE_ID NUMBER(10) NOT NULL PRIMARY KEY,
 FNAME VARCHAR(30) NOT NULL,
 LNAME VARCHAR(30) NOT NULL,
 USERNAME VARCHAR(30) UNIQUE NOT NULL,
 "PASSWORD" VARCHAR(30) NOT NULL,
-DEPARTMENT_ID NUMBER(3),
+DEPARTMENT_NAME VARCHAR(30),
 SUPERVISOR_ID NUMBER (10),
 ADDRESS VARCHAR(30) NOT NULL,
 CITY varchar(30) not null,
 STATE VARCHAR(30) NOT NULL,
 ZIPCODE NUMBER(5) NOT NULL,
 PHONENUMBER VARCHAR(10) NOT NULL,
-EMAIL VARCHAR(30) NOT NULL,
-constraint fk_department foreign key (department_id) references department(department_id));
+EMAIL VARCHAR(100) NOT NULL,
+CONSTRAINT FK_DEPARTMENT FOREIGN KEY (DEPARTMENT_NAME) REFERENCES DEPARTMENT(DEPARTMENT_NAME));
 
 
+
+--REIMBURSMENTS TABLER
 create table REIMBURSMENT(
 REIMBURSMENT_ID NUMBER(10) NOT NULL PRIMARY KEY,
 EMPLOYEE_ID NUMBER(10) NOT NULL ,
-REIMBURSMENT_TYPE_ID NUMBER(10) NOT NULL,
+REIMBURSMENT_TYPE_NAME VARCHAR(30) NOT NULL,
 REIMBURSMENT_AMOUNT DECIMAL(6,2) NOT NULL,
 APPROVAL_STEP NUMBER(1) NOT NULL,
-STATUS NUMBER(1) NOT NULL,
-type_id number(3) NOT NULL,
-CONSTRAINT FK_EMPLOYEE FOREIGN KEY (EMPLOYEE_ID) REFERENCES 
-EMPLOYEES(EMPLOYEE_ID)
-ON DELETE CASCADE);
+STATUS VARCHAR(20) NOT NULL,
+SUBMITTED VARCHAR(3) NOT NULL,
+PREAPPROVED VARCHAR(3) NOT NULL,
+EVENT_START_DATE DATE NOT NULL,
+EVENT_END_DATE DATE NOT NULL,
+"LOCATION" VARCHAR(30) NOT NULL,
+JUSTIFICATION VARCHAR(100) NOT NULL,
+MISSED_WORK NUMBER(2) NOT NULL,
+FILE_ID NUMBER(2) NOT NULL,
+CONSTRAINT FK_FILE FOREIGN KEY(FILE_ID) REFERENCES FILE_ATTACHMENTS(FILE_ID),
+CONSTRAINT MISSED_WORK_CHECK CHECK (MISSED_WORK > 0),
+CONSTRAINT FK_REIMBURSMENT_TYPE FOREIGN KEY(REIMBURSMENT_TYPE_NAME) REFERENCES REIMBURSMENT_TYPE(REIMBURSMENT_TYPE_NAME),
+CONSTRAINT FK_EMPLOYEES FOREIGN KEY(EMPLOYEE_ID) REFERENCES EMPLOYEES(EMPLOYEE_ID) ON DELETE CASCADE;
 
 
---need to add fk constraint from employees to department using the department key
---i will update this tomorrow
+
+--DEPARTMENT TABLE
 CREATE TABLE DEPARTMENT(
-DEPARTMENT_ID NUMBER(2) NOT NULL PRIMARY KEY,
-DEPARTMENT_NAME VARCHAR(30) NOT NULL,
+DEPARTMENT_NAME VARCHAR(30) NOT NULL PRIMARY KEY,
 DEPARTMENT_HEAD_ID NUMBER(10) NOT NULL,
 BENCO_ID NUMBER(10) NOT NULL);
 
 
 
---need to update the reimbursment fk tomorrow
---you won't be able to reference this section yet.
+--REIMBURSEMENT TYPE TABLE 
 CREATE TABLE REIMBURSMENT_TYPE(
-TYPE_ID NUMBER(3) NOT NULL PRIMARY KEY,
-TYPE_NAME VARCHAR(30) NOT NULL,
+REIMBURSMENT_TYPE_NAME VARCHAR(30) NOT NULL PRIMARY KEY,
 TYPE_PERCENTAGE DECIMAL(2,2) NOT NULL,
 GRADING_FORMAT NUMBER(1) NOT NULL,
 CONSTRAINT FK_REIMBURSMENT_ID FOREIGN KEY(REIMBURSMENT_ID) 
-REFERENCES REIMBURSMENT(REIMBURSMENT_ID)
-ON DELETE CASCADE);
+REFERENCES REIMBURSMENT(REIMBURSMENT_ID));
 
 
+
+--TABLE FOR FILE ATTACHMENTS
 CREATE TABLE FILE_ATTACHMENTS(
 FILE_ID NUMBER(2) NOT NULL PRIMARY KEY,
 FILE_NAME BLOB NOT NULL,
@@ -60,43 +69,44 @@ ON DELETE CASCADE);
 
 
 
---Insert Statements
---If you are having trouble accessing some of the values let me know, i had to add columns that i left out and then edit
---the insert statements to match what I left out. 
-INSERT INTO EMPLOYEES VALUES(1,'Kaleb','Martin','Kmart','password', 1, 5 , '1326 tulane dr.' , 'Denton', 'Texas', 76210 , '9032173563', 'kalebamartin05@gmail.com');
-INSERT INTO EMPLOYEES VALUES(2,'Derek','Moore','DMoore','password', 2, 3 , '1234 pennsylvania ave.' ,'Mertyl Beach', 'South Carolina', 55555, '5555555555' , 'DMoore@gmail.com'  );
-INSERT INTO EMPLOYEES VALUES(3,'John','wizniewski','wizkid','password', 2 ,7,'1234 sleepyHollow cr.' , 'Akron','Ohio',55555, '5555555555','jwiznew@gmail.com');
-
---All of the reimbursments are for derek moore the 2nd employee
---I will create a reference table of all of the Reimbursment_type_id's tomorrow
-insert into reimbursment values(1,2,1,250.00,1,1);
-insert into reimbursment values(2,2,2,200.00,1,1);
-insert into reimbursment values(3,2,3,100.00,2,2);
-
---there are only two departments so far. 
---let me know how many more you need to test with.
-insert into department values(2,'I.T.',7,100);
-insert into department values(1,'Sales',9,100);
-
---reimbursment type percentages are all correct except the certification one
---i set the type to decimal(2,2) forgetting about the class that is
---100% reimbursable. 
-insert into REIMBURSMENT_TYPE VALUES(1,'university course',.80,1);
-insert into REIMBURSMENT_TYPE VALUES(2,'seminar',.60,4);
-insert into REIMBURSMENT_TYPE VALUES(3,'certification prep classes',.75,2);
-insert into REIMBURSMENT_TYPE VALUES(4,'certification',.99,3);
-insert into REIMBURSMENT_TYPE VALUES(5,'technical training',.90,3);
-insert into REIMBURSMENT_TYPE VALUES(6,'other',.30,4);
-
-
---im tired so im going to go to sleep and finish the insert statements tomorrow for the files table. 
-
---i need to add this constraint tomorrow to the reimbursment_type
-alter table reimbursment_type add constraint fk_type_id foreign key(type_id) references reimbursment(type_id);
-
---if anything doesn't work just let me know or if you want to change it and send it back. just checkout the sql branch and 
---add .sql file with a different name. 
+--ADDITIONAL INFO TABLE
+CREATE TABLE ADDITIONAL_INFO(
+INFO VARCHAR(300) NOT NULL,
+REIMBURSMENT_ID NUMBER(10) NOT NULL,
+CONSTRAINT FK_INFO_REIMBURSMENT FOREIGN KEY(REIMBURSMENT_ID)
+REFERENCES REIMBURSMENT(REIMBURSMENT_ID) ON DELETE CASCADE);
 
 
 
 
+--procedure to get all from 
+create or replace procedure INTO_REIMBURSMENT(
+EMP_ID_IN IN NUMBER, REIMBURSMENT_TYPE_ID_IN IN NUMBER, 
+REIMBURSMENT_AMOUNT_IN IN NUMBER,APPROVAL_STEP_IN IN NUMBER,
+TYPE_ID_IN IN NUMBER)
+as 
+begin
+    INSERT INTO REIMBURSMENT VALUES (REIMBURSMENT_ID_SEQ.NEXTVAL, EMP_ID_IN, REIMBURSMENT_TYPE_ID_IN,
+    REIMBURSMENT_AMOUNT_IN, APPROVAL_STEP_IN, TYPE_ID_IN);
+end;
+/
+
+
+
+--select * from 
+--employee name, company email,approval step , department, reimbursment type, status., phone, address, employee city, state, zip, event date/time, location, description, justification, missed work, preapproved.
+--WITH THE AMOUNT LEFT
+
+
+
+
+--procedure to store all submitted fields. 
+
+--procedure to get the total amount left from the reimbursment for the year.
+
+--procedure for information request --info request add new column in reimbursement. 
+
+--update the four columns that are editable. 
+
+/*
+PRE APPROVED
