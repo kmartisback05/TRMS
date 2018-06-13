@@ -12,18 +12,19 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js" integrity="sha256-0YPKAwZP7Mp3ALMRVB2i8GXeEndvCq3eSl/WsAl1Ryk=" crossorigin="anonymous"></script>
     <script src="../scripts/bootstrap-datetimepicker.min.js"></script>
-    <script src="../scripts/modal.js"></script>
+    <script src="../scripts/currency_change.js"></script>
+    <script src="../scripts/saving_changes.js"></script>
+    <script src="../scripts/navigation_fields.js"></script>
+    <script src="../scripts/reimbursment_table.js"></script>
+    <script src="../scripts/idle.js"></script>
     <script src="../scripts/filter.js"></script>
     <script src="../scripts/sort.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
     <script>
         $(function () {
-            $('#Event_date').datetimepicker();
-        });
-
-        $(function () {
-            $('#Missed_date').datetimepicker();
+            $('#program_Start').datetimepicker();
+            $('#program_End').datetimepicker();
         });
     </script>
 </head>
@@ -42,7 +43,7 @@
             </ul>
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">{Username}</a>
+                    <a class="nav-link" id="Username" href="#">Hello, <b>{Username}</b> you have <b>{Amount}</b> left in till 01/01/2019</a>
                 </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link" aria-expanded="false"><i class="fa fa-fw fa-bell-o"></i> Messages <span class="badge badge-secondary badge-pill">0</span></a>
@@ -56,6 +57,9 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
+                <div class="alert alert-warning text-center" role="alert" id="alert">
+                    There are no reimbursments that you can view at this time. If this is an issue please call!
+                </div>
                 <div class="card">
                     <div class="card-header">
                         <ul class="nav nav-tabs card-header-tabs">
@@ -65,46 +69,43 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Apply for Reimbursements</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Submit Required Information</a>
-                            </li>
                         </ul>
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-lg-12">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
                                 <div class="form-group">
                                     <input type="text" id="inputfilter" class="form-control glyphicon glyphicon-search" placeholder="&#x1F50D" title="Type in a name">
                                 </div>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-lg-12">
+                            <div class="col-lg-12 col-md-2">
                                 <table class="table table-hover text-center" id="filterme">
                                     <thead class="thead-light">
                                         <tr>
                                             <th scope="col">#</th>
-                                            <th scope="col" onclick="sortTable(1)">Full Name <i class="fa fa-fw fa-sort"/></th>
-                                            <th scope="col" onclick="sortTable(2)">Department <i class="fa fa-fw fa-sort"/></th>
-                                            <th scope="col" onclick="sortTable(3)">Phone # <i class="fa fa-fw fa-sort"/></th>
-                                            <th scope="col" onclick="sortTable(4)">Company Email <i class="fa fa-fw fa-sort"/></th>
-                                            <th scope="col" onclick="sortTable(5)">Reimbursment Type <i class="fa fa-fw fa-sort"/></th>
-                                            <th scope="col" onclick="sortTable(6)">Reimbursment Amount <i class="fa fa-fw fa-sort"/></th>
-                                            <th scope="col" onclick="sortTable(7)">Approval Step <i class="fa fa-fw fa-sort"/></th>
-                                            <th scope="col" onclick="sortTable(8)">Submission<i class="fa fa-fw fa-sort"/></th>
-                                            <th scope="col" onclick="sortTable(9)">Status <i class="fa fa-fw fa-sort"/></th>
+                                            <th scope="col">Full Name <i class="fa fa-fw fa-sort"/></th>
+                                            <th scope="col">Department <i class="fa fa-fw fa-sort"/></th>
+                                            <th scope="col"> Phone # <i class="fa fa-fw fa-sort"/></th>
+                                            <th scope="col">Company Email <i class="fa fa-fw fa-sort"/></th>
+                                            <th scope="col">Reimbursment Type <i class="fa fa-fw fa-sort"/></th>
+                                            <th scope="col">Reimbursment Amount <i class="fa fa-fw fa-sort"/></th>
+                                            <th scope="col">Approval Step <i class="fa fa-fw fa-sort"/></th>
+                                            <th scope="col">Submission<i class="fa fa-fw fa-sort"/></th>
+                                            <th scope="col">Status <i class="fa fa-fw fa-sort"/></th>
                                         </tr>
                                     </thead>
                                     <tbody id="fbody">
                                         <tr data-toggle="modal" data-id="1" data-target="#orderModal">
-                                            <th scope="row">1</th>
+                                            <td>1</td>
                                             <td>Jon Wisniewski</td>
                                             <td>Sales</td>
                                             <td>(330) 607-7996</td>
                                             <td>jwisnie5@kent.edu</td>
-                                            <td>Certifications</td>
-                                            <td>$600.00</td>
-                                            <td>Depeartment Head</td>
+                                            <td>Certification</td>
+                                            <td>600.00</td>
+                                            <td>Emp. Department Head</td>
                                             <td>No</td>
                                             <td>Pending</td>
                                         </tr>
@@ -114,9 +115,9 @@
                                             <td>IT</td>
                                             <td>(532) 843-7345</td>
                                             <td>bobh45@gmail.com</td>
-                                            <td>Certifications Prep</td>
-                                            <td>$203.00</td>
-                                            <td>Department Supvisor</td>
+                                            <td>Certification Prep</td>
+                                            <td>203.00</td>
+                                            <td>Emp. Supervisor</td>
                                             <td>Yes</td>
                                             <td>Pending</td>
                                         </tr>
@@ -127,8 +128,8 @@
                                             <td>(845) 345-6345</td>
                                             <td>MayL99@gmail.com</td>
                                             <td>Seminar</td>
-                                            <td>$150.00</td>
-                                            <td>Depeartment Head</td>
+                                            <td>150.00</td>
+                                            <td>Emp. Department Head</td>
                                             <td>No</td>
                                             <td>Pending</td>
                                         </tr>
@@ -169,86 +170,118 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">Editing {Firstname} {Lastname} reimbursment</h4>
+                        <h4 class="modal-title"></h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     </div>
                     <div class="modal-body">
-                        <form>
+                        <form id="meetingForm" novalidate>
                             <div class="row">
                                 <div class="col-lg-4 col-md-4">
                                     <span class="form-group">
-                                        <label for="Name"><b>Full Name:</b></label>
+                                        <label for="name"><b>Full Name:</b></label>
                                         <br />
-                                        <input type="text" class="form-control custom-select-sm" id="Name" disabled required>
+                                        <input type="text" class="form-control custom-select-sm" id="name" required>
+                                        <div id="display_Error_Name" class="text-danger">
+                                        </div>
                                     </span>
                                     <span class="form-group">
-                                        <label for="Department"><b>Department:</b></label>
+                                        <label for="department_Name"><b>Department:</b></label>
                                         <br />
-                                        <input type="text" class="form-control custom-select-sm" id="Department" disabled required>
+                                        <select class="form-control custom-select-sm" id="department_Name" required>
+                                            <option value="Accounting">Accounting</option>
+                                            <option value="H.R">H.R.</option>
+                                            <option value="Finance">Finance</option>
+                                            <option value="I.T">I.T.</option>
+                                            <option value="Marketing">Marketing</option>
+                                            <option value="Production">Production</option>
+                                            <option value="Purchasing">Purchasing</option>
+                                            <option value="Sales">Sales</option>
+                                        </select>
+                                        <div id="display_Error_Status" class="text-danger">
+                                        </div>
                                     </span>
                                     <span class="form-group">
-                                        <label for="Phone"><b>Phone #:</b></label>
+                                        <label for="phone"><b>Phone #:</b></label>
                                         <br />
-                                        <input type="text" class="form-control custom-select-sm" id="Phone" disabled required>
+                                        <input type="text" class="form-control custom-select-sm" id="phone" required>
+                                        <div id="display_Error_Phone" class="text-danger">
+                                        </div>
                                     </span>
                                 </div>
                                 <div class="col-lg-4 col-md-4">
                                     <span class="form-group">
-                                        <label for="Email"><b>Company Email:</b></label>
+                                        <label for="email"><b>Company Email:</b></label>
                                         <br />
-                                        <input type="text" class="form-control custom-select-sm" id="Email" disabled required>
+                                        <input type="text" class="form-control custom-select-sm" id="email" required>
+                                        <div id="display_Error_Email" class="text-danger">
+                                        </div>
                                     </span>
                                     <span class="form-group">
-                                        <label for="Type"><b>Reimbursment Type:</b></label>
+                                        <label for="type"><b>Reimbursment Type:</b></label>
                                         <br />
                                         <span>
-                                            <select class="form-control custom-select-sm" id="Type" disabled>
+                                            <select class="form-control custom-select-sm" id="type">
                                                 <option value="Certification">Certification</option>
-                                                <option value="Certification_Prep_Courses" selected>Certification Prep Courses</option>
+                                                <option value="Certification Prep" selected>Certification Prep Courses</option>
                                                 <option value="Seminar">Seminar</option>
-                                                <option value="University_Courses">University Courses</option>
-                                                <option value="Technical_Training">Technical Training</option>
+                                                <option value="University Course">University Courses</option>
+                                                <option value="Technical Training">Technical Training</option>
                                                 <option value="Other">Other/option>
                                             </select>
+                                            <div id="display_Error_Type" class="text-danger">
+                                            </div>
                                         </span>
                                     </span>
                                     <span class="form-group">
-                                        <label for="Amount"><b>Reimbursment Amount:</b></label>
+                                        <label for="amount"><b>Reimbursment Amount:</b></label>
                                         <br />
-                                        <input type="text" class="form-control custom-select-sm" id="Amount" disabled required>
+                                        <div class="input-group input-group-sm mb-2">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">$</div>
+                                            </div>
+                                            <input type="number" min="0.00" max="10000.00" step="0.01" class="form-control custom-select-sm" id="amount" required />
+                                        </div>
+                                        <div id="display_Error_Amount" class="text-danger">
+                                        </div>
                                     </span>
                                 </div>
                                 <div class="col-lg-4 col-md-4">
                                     <span class="form-group">
-                                        <label for="Step"><b>Approval Step:</b></label>
+                                        <label for="step"><b>Approval Step:</b></label>
                                         <br />
                                         <span>
-                                            <select class="form-control custom-select-sm" id="Step" disabled>
-                                                <option value="Emplpyee Supervisor">Emplpyee Supervisor</option>
-                                                <option value="Emplpyee Department Head">Emplpyee Department Head</option>
+                                            <select class="form-control custom-select-sm" id="step">
+                                                <option value="Emp. Supervisor">Emp. Supervisor</option>
+                                                <option value="Emp. Department Head">Emp. Department Head</option>
                                                 <option value="Benefit Cordinator">Benefit Cordinator</option>
                                                 <option value="Benefit Supervisor">Benefit Supervisor</option>
                                             </select>
+                                            <div id="display_Error_Step" class="text-danger">
+                                            </div>
                                         </span>
                                     </span>
                                     <span class="form-group">
-                                        <label for="Submission"><b>Submission:</b></label>
+                                        <label for="submission"><b>Submission:</b></label>
                                         <br />
                                         <span>
-                                            <select class="form-control custom-select-sm" id="Type" disabled>
+                                            <select class="form-control custom-select-sm" id="submission">
                                                 <option value="No">No</option>
                                                 <option value="Yes">Yes</option>
                                             </select>
+                                            <div id="display_Error_Submission" class="text-danger">
+                                            </div>
                                         </span>
                                     </span>
                                     <span class="form-group">
-                                        <label for="Status"><b>Status:</b></label>
+                                        <label for="status"><b>Status:</b></label>
                                         <br />
-                                        <select class="form-control custom-select-sm" id="Status" disabled>
-                                            <option value="Waiting">User Required</option>
+                                        <select class="form-control custom-select-sm" id="status">
+                                            <option value="Waiting">Waiting</option>
                                             <option value="Pending">Pending</option>
                                             <option value="Denied">Denied</option>
                                         </select>
+                                        <div id="display_Error_Status" class="text-danger">
+                                        </div>
                                     </span>
                                 </div>
                             </div>
@@ -261,20 +294,24 @@
                             <div class="row">
                                 <div class="col-lg-4 col-md-4">
                                     <span class="form-group">
-                                        <label for="Address"><b>Employees Address:</b></label>
+                                        <label for="address"><b>Employees Address:</b></label>
                                         <br />
-                                        <input type="text" class="form-control custom-select-sm" id="Address" disabled required>
+                                        <input type="text" class="form-control custom-select-sm" id="address" required>
+                                        <div id="display_Error_Address" class="text-danger">
+                                        </div>
                                     </span>
                                     <span class="form-group">
-                                        <label for="City"><b>Employees City:</b></label>
+                                        <label for="city"><b>Employees City:</b></label>
                                         <br />
-                                        <input type="text" class="form-control custom-select-sm" id="City" disabled required>
+                                        <input type="text" class="form-control custom-select-sm" id="city" required>
+                                        <div id="display_Error_City" class="text-danger">
+                                        </div>
                                     </span>
                                     <span class="form-group">
-                                        <label for="Zipcode"><b>Employees State:</b></label>
+                                        <label for="state"><b>Employees State:</b></label>
                                         <br />
                                         <span id="State">
-                                            <select class="form-control custom-select-sm" id="State" name="state" disabled required>
+                                            <select class="form-control custom-select-sm" id="state" name="state" required>
                                                 <option value="AK">Alaska</option>
                                                 <option value="AL">Alabama</option>
                                                 <option value="AR">Arkansas</option>
@@ -328,49 +365,72 @@
                                                 <option value="WV">West Virginia</option>
                                                 <option value="WY">Wyoming</option>
                                             </select>
+                                            <div id="display_Error_State" class="text-danger">
+                                            </div>
                                         </span>
                                     </span>
                                     <span class="form-group">
-                                        <label for="Zipcode"><b>Employees Zipcode:</b></label>
+                                        <label for="zipcode"><b>Employees Zipcode:</b></label>
                                         <br />
-                                        <input type="text" class="form-control custom-select-sm" id="Zipcode" disabled required>
+                                        <input type="text" class="form-control custom-select-sm" id="zipcode" required>
+                                        <div id="display_Error_Zipcode" class="text-danger">
+                                        </div>
                                     </span>
                                 </div>
                                 <div class="col-lg-4 col-md-4">
                                     <span class="form-group">
-                                        <label for="Event_date"><b>Event Date:</b></label>
+                                        <label for="program_Start"><b>Program Start:</b></label>
                                         <br />
-                                        <input type="text" class="form-control custom-select-sm" id="Event_date" required>
+                                        <input type="text" class="form-control custom-select-sm" id="program_Start" required>
+                                        <div id="display_Error_Program_Start" class="text-danger">
+                                        </div>
                                     </span>
                                     <span class="form-group">
-                                        <label for="Location"><b>Location:</b></label>
+                                        <label for="program_End"><b>Program End:</b></label>
                                         <br />
-                                        <input type="text" class="form-control custom-select-sm" id="Location" required>
+                                        <input type="text" class="form-control custom-select-sm" id="program_End" required>
+                                        <div id="display_Error_Program_End" class="text-danger">
+                                        </div>
                                     </span>
                                     <span class="form-group">
-                                        <label for="Description"><b>Description:</b></label>
+                                        <label for="location"><b>Location:</b></label>
                                         <br />
-                                        <input type="text" class="form-control custom-select-sm" id="Description" required>
+                                        <input type="text" class="form-control custom-select-sm" id="location" required>
+                                        <div id="display_Error_Location" class="text-danger">
+                                        </div>
+                                    </span>
+                                    <span class="form-group">
+                                        <label for="description"><b>Description:</b></label>
+                                        <br />
+                                        <input type="text" class="form-control custom-select-sm" id="description" required>
+                                        <div id="display_Error_Description" class="text-danger">
+                                        </div>
                                     </span>
                                 </div>
                                 <div class="col-lg-4 col-md-4">
                                     <span class="form-group">
-                                        <label for="Justification"><b>Justification:</b></label>
+                                        <label for="justification"><b>Justification:</b></label>
                                         <br />
-                                        <input type="text" class="form-control custom-select-sm" id="Justification" required>
+                                        <input type="text" class="form-control custom-select-sm" id="justification" required>
+                                        <div id="display_Error_Justification" class="text-danger">
+                                        </div>
                                     </span>
                                     <span class="form-group">
-                                        <label for="Missed_date"><b>Missed Work:</b></label>
+                                        <label for="work_Missed"><b>Worked Missed (Hours):</b></label>
                                         <br />
-                                        <input type="text" class="form-control custom-select-sm" id="Missed_date" disabled required>
+                                        <input type="number" class="form-control custom-select-sm" id="work_Missed" min="0" max="999" required>
+                                        <div id="display_Error_Worked_Missed" class="text-danger">
+                                        </div>
                                     </span>
                                     <span class="form-group">
-                                        <label for="Approved"><b>Pre-Approved:</b></label>
+                                        <label for="approved"><b>Pre-Approved:</b></label>
                                         <br />
-                                        <select class="form-control custom-select-sm" id="Approved" disabled>
+                                        <select class="form-control custom-select-sm" id="approved">
                                             <option value="No">No</option>
                                             <option value="Yes">Yes</option>
                                         </select>
+                                        <div id="display_Error_Approved" class="text-danger">
+                                        </div>
                                     </span>
                                 </div>
                             </div>
@@ -378,7 +438,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <button type="button" class="btn btn-primary" id="saving_Changes">Save changes</button>
                     </div>
                 </div>
             </div>

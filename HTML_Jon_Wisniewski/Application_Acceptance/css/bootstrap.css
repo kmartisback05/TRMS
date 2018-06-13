@@ -72,6 +72,7 @@ body {
   background-color: transparent;
 }
 
+
 input[type=checkbox], input[type=radio] {
   vertical-align: middle;
   position: relative;
@@ -2608,6 +2609,26 @@ fieldset:disabled a.btn {
   box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.5);
 }
 
+.fade {
+  opacity: 0;
+  -webkit-transition: opacity 0.15s linear;
+  -moz-transition: opacity 0.15s linear;
+  -o-transition: opacity 0.15s linear;
+  transition: opacity 0.15s linear;
+}
+.fade.in {
+  opacity: 1;
+}
+
+.fadeIn {
+    opacity: 1;
+   -webkit-animation: fadeIn 2s;
+}
+@-webkit-keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
 .btn-info {
   color: #fff;
   background-color: #17a2b8;
@@ -4961,7 +4982,9 @@ tbody.collapse.show {
   margin-bottom: 1rem;
   border: 1px solid transparent;
   border-radius: 0.25rem;
+  margin-top: 20px;
 }
+
 
 .alert-heading {
   color: inherit;

@@ -111,15 +111,22 @@
     <Content Include="css\footer.css" />
     <Content Include="css\jquery-ui.css" />
     <Content Include="css\signin.css" />
-    <Content Include="HTML\Apply_Reimbursment.html" />
-    <Content Include="HTML\Home.html" />
-    <Content Include="HTML\Login.html" />
+    <Content Include="html\Apply_Reimbursment.html" />
+    <Content Include="html\Home.html" />
+    <Content Include="html\Login.html" />
     <Content Include="img\27188428-business-wallpapers.jpg" />
     <Content Include="scripts\ai.0.22.9-build00167.js" />
     <Content Include="scripts\ai.0.22.9-build00167.min.js" />
+    <Content Include="scripts\bootstrap-auto-dismiss-alert.js" />
     <Content Include="scripts\bootstrap-datetimepicker.min.js" />
+    <Content Include="scripts\currency_change.js" />
     <Content Include="scripts\filter.js" />
-    <Content Include="scripts\modal.js" />
+    <Content Include="scripts\hide_fields.js" />
+    <Content Include="scripts\idle.js" />
+    <Content Include="scripts\login.js" />
+    <Content Include="scripts\navigation_fields.js" />
+    <Content Include="scripts\reimbursment_table.js" />
+    <Content Include="scripts\saving_changes.js" />
     <Content Include="scripts\sort.js" />
     <Content Include="Web.config" />
   </ItemGroup>
