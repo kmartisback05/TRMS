@@ -5,12 +5,11 @@ DEPARTMENT_HEAD_ID NUMBER(10) NOT NULL,
 BENCO_ID NUMBER(10) NOT NULL);
 
 
-
 --CREATE TABLE REIMBURSMENT TYPE
 CREATE TABLE REIMBURSMENT_TYPE(
 REIMBURSMENT_TYPE_NAME VARCHAR(30) NOT NULL PRIMARY KEY,
-TYPE_PERCENTAGE DECIMAL(2,2) NOT NULL,
-GRADING_FORMAT NUMBER(1) NOT NULL);
+TYPE_PERCENTAGE DECIMAL(3,2) NOT NULL,
+GRADING_FORMAT VARCHAR(30) NOT NULL);
 
 
 
@@ -75,6 +74,37 @@ INFO VARCHAR(300) NOT NULL,
 REIMBURSMENT_ID NUMBER(10) NOT NULL,
 CONSTRAINT FK_INFO_REIMBURSMENT FOREIGN KEY(REIMBURSMENT_ID)
 REFERENCES REIMBURSMENT(REIMBURSMENT_ID) ON DELETE CASCADE);
+
+
+--initial table population
+INSERT INTO DEPARTMENT VALUES( 'I.T.', 9 , 10);
+INSERT INTO DEPARTMENT VALUES( 'Sales', 20, 10);
+INSERT INTO DEPARTMENT VALUES( 'H.R.', 25, 10);
+
+
+INSERT INTO EMPLOYEES VALUES( 1, 'Kaleb' , 'Martin' , 'kmartisback05' , 'password', 'I.T.', 5, '1326 Tulane dr.',
+                            'Denton', 'Texas', 75135, '9032173563', 'kmart@gmail.com', 'no', 'no', 'no');
+INSERT INTO EMPLOYEES VALUES( 5, 'Derek' , 'Moore', 'Dmoore2', 'password', 'I.T.', 9, '1500 Sesame st.',
+                            'honolulu', 'Hawaii',88983,'1234567890','dmoore2@gmail.com','yes', 'no', 'no');
+INSERT INTO EMPLOYEES VALUES( 9, 'John' , 'Wiznewski', 'wizkid','password', 'I.T.',10,'1222 Sleepy Hollow ct.',
+                            'Sleepy Hollow', 'Ohio', 38893, '2345678901','wizkid102@gmail.com','no','yes','no');
+INSERT INTO EMPLOYEES VALUES( 10, 'Eduardo', 'Garcia', 'uncleEddy','password', 'I.T.',11,'1488 Candy Mount rd.',
+                            'chihuahua','Mexico', 84993, '5764893276', 'eduardoTheGreat@gmail.com','no','no','yes');
+
+
+INSERT INTO REIMBURSMENT_TYPE VALUES('University Course', .80, 'LetterGrade');
+INSERT INTO REIMBURSMENT_TYPE VALUES('Seminar', .60, 'Presentation');
+INSERT INTO REIMBURSMENT_TYPE VALUES('Certification Prep', .75, 'Percentage');
+INSERT INTO REIMBURSMENT_TYPE VALUES('Certification', 1, 'Percentage');
+INSERT INTO REIMBURSMENT_TYPE VALUES('Technical Training', .90, 'Percentage');
+INSERT INTO REIMBURSMENT_TYPE VALUES('Other', .30, 'Presentation');
+
+
+INSERT INTO REIMBURSMENT VALUES(1,1,'University Course',250,'Supervisor','Pending','no','no',TO_DATE('2018-06-27' ,'yyyy-mm-dd') ,TO_DATE('2018-08-01', 'yyyy-mm-dd' ),'Tampa, Fl',
+                                'to get my masters degrees', '12 week long course on neural networks',40);
+INSERT INTO REIMBURSMENT VALUES(2,5,'Seminar', 100, 'Department Head', 'Pending', 'yes', 'no', to_date('2018-08-24', 'yyyy-mm-dd'), TO_DATE('2018-08-29','yyyy-mm-dd') ,'USF',
+                                'to learn a about javascript', 'a 2 day seminar to learn about the new functionality of javascript', 10); 
+
 
 
 --PROCEDURES--
@@ -165,14 +195,4 @@ START WITH 10;
 
 
 
---DROP STATEMENTS BECAUSE I GOT TIRED OF REWRITING THEM.
-DROP TABLE ADDITIONAL_INFO;
-drop table file_attachments;
-drop table reimbursment;
-drop table department;
-drop table employees;
-drop table reimbursment_type;
-ALTER TABLE REIMBURSMENT DROP CONSTRAINT FK_REIMBURSMENT_TYPE;
-ALTER TABLE REIMBURSMENT DROP CONSTRAINT FK_EMPLOYEES;
-ALTER TABLE REIMBURSMENT DROP CONSTRAINT FK_EMPLOYEES;
-alter table reimbursment_type drop constraint FK_REIMBURSMENT_TYPE;
+
