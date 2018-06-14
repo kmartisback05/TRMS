@@ -48,7 +48,7 @@
 
     $.ajax({
         type: "GET",
-        url: "",
+        url: "http://localhost:8080/Project1/home",
         data: emp_id,
         dataType: "json",
         success: function (data, status, xhr) {

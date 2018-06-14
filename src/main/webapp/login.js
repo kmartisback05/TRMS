@@ -19,8 +19,9 @@
         			"username": username,
         			"password": password
         	}
+        	
             var object_After = JSON.stringify(object_Before);
-            $.ajax({
+        	$.ajax({
                 type: "POST",
                 url: "http://localhost:8080/Project1/login",
                 data: object_After,
@@ -28,8 +29,11 @@
                 success: function (data, status, xhr) {
                 	//alert(xhr.readyState);
                 	//alert(xhr.status);
+                	console.log(data);
+                	console.log(status);
+                	console.log(xhr);
                     if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200 && data) {
-                        if (data === "Wrong Password or Username") {
+                       /* if (data === "Wrong Password or Username") {
                             alert_warning("alert-warning","Username or Password Wrong!");
                         } else {
                             alert("alert-success", "Username and Password Correct!");
@@ -51,11 +55,11 @@
                                     Cookies.set('department_Name', obj.department_name, { expires: 1 });
                                     Cookies.set('amount', obj.amount, { expires: 1 });
                                 }
-                                window.location.href = "../HTML/Home.html";
+                                //window.location.href = "../HTML/Home.html";
                             }, 2000);
-                        }
+                        }*/
                     }
-                },
+                }/*,
                 error: function (data) {
                     if (typeof (Storage) !== "undefined") {
                         localStorage.setItem("Error", data);
@@ -63,11 +67,11 @@
                         //For browsers that do not have webstorage
                         console.log(data);
                     }
-                }
+                }*/
             })
         }
-    });
-});
+    }); //end submit function
+}); //end ready function
 
 function alert(type, message) {
     $(".alert").addClass(type).append(message + "<button type='button'" +
