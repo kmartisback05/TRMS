@@ -125,13 +125,13 @@
     <Content Include="scripts\hide_fields.js" />
     <Content Include="scripts\idle.js" />
     <Content Include="scripts\jquery.dataTables.min.js" />
+    <Content Include="scripts\form_submit.js" />
     <Content Include="scripts\login.js" />
     <Content Include="scripts\logout.js" />
     <Content Include="scripts\navigation_fields.js" />
     <Content Include="scripts\refresh.js" />
     <Content Include="scripts\reimbursment_table.js" />
     <Content Include="scripts\saving_changes.js" />
-    <Content Include="scripts\sort.js" />
     <Content Include="scripts\submit_grades.js" />
     <Content Include="Web.config" />
   </ItemGroup>

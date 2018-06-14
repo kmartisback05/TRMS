@@ -3,7 +3,6 @@
 <head>
     <title></title>
     <meta charset="utf-8" />
-
     <link href="../css/bootstrap.css" rel="stylesheet" id="bootstrap-css">
     <link href="../css/footer.css" rel="stylesheet" id="footer-css">
     <link href="../css/bootstrap-datetimepicker.css" rel="stylesheet">
@@ -24,7 +23,6 @@
     <script src="../scripts/navigation_fields.js"></script>
     <script src="../scripts/reimbursment_table.js"></script>
     <script src="../scripts/idle.js"></script>
-    <script src="../scripts/sort.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
     <script>
@@ -75,10 +73,10 @@
                     <div class="card-header">
                         <ul class="nav nav-tabs card-header-tabs">
                             <li class="nav-item">
-                                <a class="nav-link active" href="#">Reimbursements</a>
+                                <a class="nav-link active" href="../html/Home.html">Reimbursements</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Apply for Reimbursements</a>
+                                <a class="nav-link" href="../html/Apply_Reimbursment.html">Apply for Reimbursements</a>
                             </li>
                         </ul>
                     </div>
@@ -440,7 +438,7 @@
                                     <span class="form-group">
                                         <label for="work_Missed"><b>Worked Missed (Hours):</b></label>
                                         <br />
-                                        <input type="number" class="form-control custom-select-sm" id="work_Missed" min="0" max="1000" required>
+                                        <input type="number" class="form-control custom-select-sm" id="work_Missed" min="1" max="1000" required>
                                         <div id="display_Error_Work_Missed" class="text-danger">
                                         </div>
                                     </span>
