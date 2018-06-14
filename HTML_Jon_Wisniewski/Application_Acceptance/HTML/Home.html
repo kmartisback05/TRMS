@@ -9,9 +9,10 @@
     <link href="../css/bootstrap-datetimepicker.css" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js" type="text/javascript"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js" integrity="sha256-0YPKAwZP7Mp3ALMRVB2i8GXeEndvCq3eSl/WsAl1Ryk=" crossorigin="anonymous"></script>
     <script src="../scripts/bootstrap-datetimepicker.min.js"></script>
+    <script src="../scripts/bootstrap-auto-dismiss-alert.js"></script>
     <script src="../scripts/currency_change.js"></script>
     <script src="../scripts/saving_changes.js"></script>
     <script src="../scripts/navigation_fields.js"></script>
@@ -22,6 +23,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
     <script>
+        $(".alert").hide();
         $(function () {
             $('#program_Start').datetimepicker();
             $('#program_End').datetimepicker();
@@ -57,8 +59,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
-                <div class="alert alert-warning text-center" role="alert" id="alert">
-                    There are no reimbursments that you can view at this time. If this is an issue please call!
+                <div class="alert text-center" role="alert" id="alert">
                 </div>
                 <div class="card">
                     <div class="card-header">
@@ -87,7 +88,7 @@
                                             <th scope="col">#</th>
                                             <th scope="col">Full Name <i class="fa fa-fw fa-sort"/></th>
                                             <th scope="col">Department <i class="fa fa-fw fa-sort"/></th>
-                                            <th scope="col"> Phone # <i class="fa fa-fw fa-sort"/></th>
+                                            <th scope="col">Phone # <i class="fa fa-fw fa-sort"/></th>
                                             <th scope="col">Company Email <i class="fa fa-fw fa-sort"/></th>
                                             <th scope="col">Reimbursment Type <i class="fa fa-fw fa-sort"/></th>
                                             <th scope="col">Reimbursment Amount <i class="fa fa-fw fa-sort"/></th>
@@ -170,7 +171,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title"></h4>
+                        <h4 class="modal-title top_title"></h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     </div>
                     <div class="modal-body">
@@ -197,7 +198,7 @@
                                             <option value="Purchasing">Purchasing</option>
                                             <option value="Sales">Sales</option>
                                         </select>
-                                        <div id="display_Error_Status" class="text-danger">
+                                        <div id="display_Error_Department_Name" class="text-danger">
                                         </div>
                                     </span>
                                     <span class="form-group">
@@ -239,7 +240,7 @@
                                             <div class="input-group-prepend">
                                                 <div class="input-group-text">$</div>
                                             </div>
-                                            <input type="number" min="0.00" max="10000.00" step="0.01" class="form-control custom-select-sm" id="amount" required />
+                                            <input type="number" min="0.00" max="10000.00" step="0.01" class="form-control custom-select-sm submitable" id="amount" required />
                                         </div>
                                         <div id="display_Error_Amount" class="text-danger">
                                         </div>
@@ -264,7 +265,7 @@
                                         <label for="submission"><b>Submission:</b></label>
                                         <br />
                                         <span>
-                                            <select class="form-control custom-select-sm" id="submission">
+                                            <select class="form-control custom-select-sm submitable" id="submission">
                                                 <option value="No">No</option>
                                                 <option value="Yes">Yes</option>
                                             </select>
@@ -275,7 +276,7 @@
                                     <span class="form-group">
                                         <label for="status"><b>Status:</b></label>
                                         <br />
-                                        <select class="form-control custom-select-sm" id="status">
+                                        <select class="form-control custom-select-sm submitable" id="status">
                                             <option value="Waiting">Waiting</option>
                                             <option value="Pending">Pending</option>
                                             <option value="Denied">Denied</option>
@@ -381,28 +382,28 @@
                                     <span class="form-group">
                                         <label for="program_Start"><b>Program Start:</b></label>
                                         <br />
-                                        <input type="text" class="form-control custom-select-sm" id="program_Start" required>
+                                        <input type="text" class="form-control custom-select-sm submitable" id="program_Start" required>
                                         <div id="display_Error_Program_Start" class="text-danger">
                                         </div>
                                     </span>
                                     <span class="form-group">
                                         <label for="program_End"><b>Program End:</b></label>
                                         <br />
-                                        <input type="text" class="form-control custom-select-sm" id="program_End" required>
+                                        <input type="text" class="form-control custom-select-sm submitable" id="program_End" required>
                                         <div id="display_Error_Program_End" class="text-danger">
                                         </div>
                                     </span>
                                     <span class="form-group">
                                         <label for="location"><b>Location:</b></label>
                                         <br />
-                                        <input type="text" class="form-control custom-select-sm" id="location" required>
+                                        <input type="text" class="form-control custom-select-sm submitable" id="location" required>
                                         <div id="display_Error_Location" class="text-danger">
                                         </div>
                                     </span>
                                     <span class="form-group">
                                         <label for="description"><b>Description:</b></label>
                                         <br />
-                                        <input type="text" class="form-control custom-select-sm" id="description" required>
+                                        <input type="text" class="form-control custom-select-sm submitable" id="description" required>
                                         <div id="display_Error_Description" class="text-danger">
                                         </div>
                                     </span>
@@ -411,15 +412,15 @@
                                     <span class="form-group">
                                         <label for="justification"><b>Justification:</b></label>
                                         <br />
-                                        <input type="text" class="form-control custom-select-sm" id="justification" required>
+                                        <input type="text" class="form-control custom-select-sm submitable" id="justification" required>
                                         <div id="display_Error_Justification" class="text-danger">
                                         </div>
                                     </span>
                                     <span class="form-group">
                                         <label for="work_Missed"><b>Worked Missed (Hours):</b></label>
                                         <br />
-                                        <input type="number" class="form-control custom-select-sm" id="work_Missed" min="0" max="999" required>
-                                        <div id="display_Error_Worked_Missed" class="text-danger">
+                                        <input type="number" class="form-control custom-select-sm" id="work_Missed" min="0" max="1000" required>
+                                        <div id="display_Error_Work_Missed" class="text-danger">
                                         </div>
                                     </span>
                                     <span class="form-group">
@@ -431,6 +432,9 @@
                                         </select>
                                         <div id="display_Error_Approved" class="text-danger">
                                         </div>
+                                    </span>
+                                    <span class="form-group">
+                                        <input type="number" class="form-control custom-select-sm submitable" id="reimbursment_Number" min="1" max="1000" required>
                                     </span>
                                 </div>
                             </div>

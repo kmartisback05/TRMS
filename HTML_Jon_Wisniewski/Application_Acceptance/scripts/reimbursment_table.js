@@ -1,5 +1,4 @@
 ﻿$(document).ready(function () {
-    var validators = ["name", "step", "submission", "status", "location", "description", "justification", "program_Start", "program_End", "approved"];
 
     if (typeof (Storage) !== "undefined") {
         //Put it in a session storage
@@ -8,12 +7,15 @@
         //No Storage so I store it in a cookie for now
         var emp_id = Cookies.get('emp_Id');
     }
+
+    $("th").mouseover(function () {
+        $(this).css('cursor', 'pointer');
+    })
     
-    //This is temp
-    console.log("W");
     $('table tbody tr td').on('click', function () {
         $("#myModal").modal("show");
 
+        $("#reimbursment_Number").val($(this).closest('tr').children()[0].textContent);
         $("#name").val($(this).closest('tr').children()[1].textContent);
         $("#department_Name").val($(this).closest('tr').children()[2].textContent);
         $("#phone").val($(this).closest('tr').children()[3].textContent);
@@ -39,12 +41,14 @@
         $("#program_Start").val(obj.description);
         $("#program_End").val(obj.approved);
 
-        $(".modal-title").append("Editing " + obj.first_name + " " + obj.last_name + " reimbursment")
+        $("#reimbursment_Number").hide();
+        $(".top_title").empty();
+        $(".top_title").append("Editing " + obj.first_name + " " + obj.last_name + " reimbursment")
     });
 
-    $.each(validators, function () {
-        $("#" + this).attr("validation_Group", "validator");
-    });
+    $("#meetingForm input, #meetingForm select").each(function () {
+        $(this).attr("validation_Group", "validator");
+    })
 
     $.ajax({
         type: "GET",
@@ -107,7 +111,8 @@
                 $("#program_Start").val(obj.description);
                 $("#program_End").val(obj.approved);
 
-                $(".modal-title").append("Editing " + obj.first_name + " " + obj.last_name + " reimbursment")
+                $(".top_title").empty();
+                $(".top_title").append("Editing " + obj.first_name + " " + obj.last_name + " reimbursment")
             });
         },
         error: function (data) {
