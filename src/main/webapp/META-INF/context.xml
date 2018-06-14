@@ -1,0 +1,8 @@
+<Context>
+
+	<ResourceLink 	name="jdbc/PEGABatchDB"
+					global="jdbc/PEGABatchDB"
+					type="javax.sql.DataSource"
+					/>
+
+</Context>
