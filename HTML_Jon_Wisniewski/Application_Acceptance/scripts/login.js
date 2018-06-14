@@ -9,11 +9,16 @@
         if (password === "" || username === "") {
             alerts("alert-warning", "Enter Username and Password!");
         } else {
-            var username_Password = [username, password];
+            var obj = {
+                "username": username,
+                "password": password
+            };
+
+            var obj_Stringify = JSON.stringify(obj)
             $.ajax({
                 type: "POST",
-                url: "",
-                data: username_Password,
+                url: "http://localhost:8080/Project1/login",
+                data: obj_Stringify,
                 dataType: "json",
                 success: function (data, status, xhr) {
                     var obj_parsed = JSON.parse(data);
