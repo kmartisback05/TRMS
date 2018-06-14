@@ -5,10 +5,8 @@
         var amount = localStorage.getItem("amount");
     } else {
         //No Storage so I store it in a cookie for now
-        var emp_id = Cookies.get('emp_id');
         var first_Name = Cookies.get('first_Name');
         var last_Name = Cookies.get('last_Name');
-        var department_Name = Cookies.get('department_Name');
         var amount = Cookies.get('amount');
     }
 

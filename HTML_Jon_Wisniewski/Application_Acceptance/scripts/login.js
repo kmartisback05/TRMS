@@ -1,4 +1,8 @@
 ﻿$(document).ready(function () {
+    $(document).on("submit", "form", function (e) {
+        e.preventDefault();
+    });
+
     $("#Submit").click(function () {
         var input_Username = $("#inputUsername").val();
         var input_Password = $("#inputPassword").val();

@@ -94,6 +94,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="css\jquery.dataTables.min.css" />
     <Content Include="packages.config" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -120,14 +121,18 @@
     <Content Include="scripts\bootstrap-auto-dismiss-alert.js" />
     <Content Include="scripts\bootstrap-datetimepicker.min.js" />
     <Content Include="scripts\currency_change.js" />
-    <Content Include="scripts\filter.js" />
+    <Content Include="scripts\file.js" />
     <Content Include="scripts\hide_fields.js" />
     <Content Include="scripts\idle.js" />
+    <Content Include="scripts\jquery.dataTables.min.js" />
     <Content Include="scripts\login.js" />
+    <Content Include="scripts\logout.js" />
     <Content Include="scripts\navigation_fields.js" />
+    <Content Include="scripts\refresh.js" />
     <Content Include="scripts\reimbursment_table.js" />
     <Content Include="scripts\saving_changes.js" />
     <Content Include="scripts\sort.js" />
+    <Content Include="scripts\submit_grades.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

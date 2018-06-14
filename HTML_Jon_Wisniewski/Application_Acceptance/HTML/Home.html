@@ -8,25 +8,35 @@
     <link href="../css/footer.css" rel="stylesheet" id="footer-css">
     <link href="../css/bootstrap-datetimepicker.css" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Cormorant" rel="stylesheet">
+    <link href="../css/jquery.dataTables.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js" type="text/javascript"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js" integrity="sha256-0YPKAwZP7Mp3ALMRVB2i8GXeEndvCq3eSl/WsAl1Ryk=" crossorigin="anonymous"></script>
     <script src="../scripts/bootstrap-datetimepicker.min.js"></script>
+    <script src="../scripts/file.js"></script>
+    <script src="../scripts/submit_grades.js"></script>
+    <script src="../scripts/jquery.dataTables.min.js"></script>
     <script src="../scripts/bootstrap-auto-dismiss-alert.js"></script>
+    <script src="../scripts/logout.js"></script>
     <script src="../scripts/currency_change.js"></script>
     <script src="../scripts/saving_changes.js"></script>
     <script src="../scripts/navigation_fields.js"></script>
     <script src="../scripts/reimbursment_table.js"></script>
     <script src="../scripts/idle.js"></script>
-    <script src="../scripts/filter.js"></script>
     <script src="../scripts/sort.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
     <script>
-        $(".alert").hide();
-        $(function () {
-            $('#program_Start').datetimepicker();
-            $('#program_End').datetimepicker();
+        $(document).ready(function () {
+            $('#filterme').DataTable({
+            });
+
+            $(".alert").hide();
+            $(function () {
+                $('#program_Start').datetimepicker();
+                $('#program_End').datetimepicker();
+            });
         });
     </script>
 </head>
@@ -45,13 +55,13 @@
             </ul>
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" id="Username" href="#">Hello, <b>{Username}</b> you have <b>{Amount}</b> left in till 01/01/2019</a>
+                    <a class="nav-link" id="Username">Hello, <b>{Username}</b> you have <b>{Amount}</b> left in till 01/01/2019</a>
                 </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link" aria-expanded="false"><i class="fa fa-fw fa-bell-o"></i> Messages <span class="badge badge-secondary badge-pill">0</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Logout</a>
+                    <a class="nav-link" id="login_Page">Logout</a>
                 </li>
             </ul>
         </div>
@@ -74,32 +84,25 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-lg-12 col-md-12 col-sm-12">
-                                <div class="form-group">
-                                    <input type="text" id="inputfilter" class="form-control glyphicon glyphicon-search" placeholder="&#x1F50D" title="Type in a name">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
                             <div class="col-lg-12 col-md-2">
                                 <table class="table table-hover text-center" id="filterme">
                                     <thead class="thead-light">
                                         <tr>
                                             <th scope="col">#</th>
-                                            <th scope="col">Full Name <i class="fa fa-fw fa-sort"/></th>
-                                            <th scope="col">Department <i class="fa fa-fw fa-sort"/></th>
-                                            <th scope="col">Phone # <i class="fa fa-fw fa-sort"/></th>
-                                            <th scope="col">Company Email <i class="fa fa-fw fa-sort"/></th>
-                                            <th scope="col">Reimbursment Type <i class="fa fa-fw fa-sort"/></th>
-                                            <th scope="col">Reimbursment Amount <i class="fa fa-fw fa-sort"/></th>
-                                            <th scope="col">Approval Step <i class="fa fa-fw fa-sort"/></th>
-                                            <th scope="col">Submission<i class="fa fa-fw fa-sort"/></th>
-                                            <th scope="col">Status <i class="fa fa-fw fa-sort"/></th>
+                                            <th scope="col">Full Name <i class="fa fa-fw fa-sort" /></th>
+                                            <th scope="col">Department <i class="fa fa-fw fa-sort" /></th>
+                                            <th scope="col">Phone # <i class="fa fa-fw fa-sort" /></th>
+                                            <th scope="col">Company Email <i class="fa fa-fw fa-sort" /></th>
+                                            <th scope="col">Type <i class="fa fa-fw fa-sort" /></th>
+                                            <th scope="col">Amount <i class="fa fa-fw fa-sort" /></th>
+                                            <th scope="col">Approval Step <i class="fa fa-fw fa-sort" /></th>
+                                            <th scope="col">Submission<i class="fa fa-fw fa-sort" /></th>
+                                            <th scope="col">Status <i class="fa fa-fw fa-sort" /></th>
                                         </tr>
                                     </thead>
                                     <tbody id="fbody">
                                         <tr data-toggle="modal" data-id="1" data-target="#orderModal">
-                                            <td>1</td>
+                                            <th scope="row">1</th>
                                             <td>Jon Wisniewski</td>
                                             <td>Sales</td>
                                             <td>(330) 607-7996</td>
@@ -138,31 +141,49 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-lg-12 float-right">
-                                <nav aria-label="Page navigation example">
-                                    <ul class="pagination float-right">
-                                        <li class="page-item disabled">
-                                            <a class="page-link" href="#" tabindex="-1">Previous</a>
-                                        </li>
-                                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                        <li class="page-item">
-                                            <a class="page-link" href="#">Next</a>
-                                        </li>
-                                    </ul>
-                                </nav>
+                        <div class="row"> 
+                            <div class="col-lg-12">
+                                <a href="#" class="btn btn-primary my-sma-btn">Refresh</a>
                             </div>
                         </div>
-                        <div class="row">
-                            <span class="col-lg-6 text-center">
-                                <a href="#" class="btn btn-primary my-large-btn">{Submit changes}</a>
-                            </span>
-                            <span class="col-lg-6 text-center">
-                                <a href="#" class="btn btn-danger my-large-btn">{Revert all changes}</a>
-                            </span>
-                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="submit_grades modal fade">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Submit Grade/Presentation</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="submission_Information">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="form-group">
+                                        <label for="additional_text"><b>Explanation:</b></label>
+                                        <textarea class="form-control grade_Presentation" id="additional_text" rows="3" required></textarea>
+                                        <div id="display_Error_Additional" class="text-danger">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input grade_Presentation" id="file_upload">
+                                        <label class="custom-file-label" for="file">Choose file...</label>
+                                        <div id="display_Error_File" class="text-danger">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>                     
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="submit_Submission">Save changes</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
@@ -171,7 +192,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title top_title"></h4>
+                        <h4 class="modal-title top_title">Submit additional information</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     </div>
                     <div class="modal-body">
@@ -382,14 +403,14 @@
                                     <span class="form-group">
                                         <label for="program_Start"><b>Program Start:</b></label>
                                         <br />
-                                        <input type="text" class="form-control custom-select-sm submitable" id="program_Start" required>
+                                        <input type="text" class="form-control custom-select-sm submitable blur_event" id="program_Start" required>
                                         <div id="display_Error_Program_Start" class="text-danger">
                                         </div>
                                     </span>
                                     <span class="form-group">
                                         <label for="program_End"><b>Program End:</b></label>
                                         <br />
-                                        <input type="text" class="form-control custom-select-sm submitable" id="program_End" required>
+                                        <input type="text" class="form-control custom-select-sm submitable blur_event" id="program_End" required>
                                         <div id="display_Error_Program_End" class="text-danger">
                                         </div>
                                     </span>
@@ -442,6 +463,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal" id="add_Information">Add Information</button>
                         <button type="button" class="btn btn-primary" id="saving_Changes">Save changes</button>
                     </div>
                 </div>

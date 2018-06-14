@@ -1,53 +1,55 @@
 ﻿$(document).ready(function () {
-    if (typeof (Storage) !== "undefined") {
-        //Put it in a session storage
-        var emp_id = localStorage.getItem("emp_Id");
-    } else {
-        //No Storage so I store it in a cookie for now
-        var emp_id = Cookies.get('emp_Id');
-    }
+    $("#refresh").click(function () {
+        if (typeof (Storage) !== "undefined") {
+            //Put it in a session storage
+            var emp_id = localStorage.getItem("emp_Id");
+        } else {
+            //No Storage so I store it in a cookie for now
+            var emp_id = Cookies.get('emp_Id');
+        }
 
-    //These are temporary 
-    apply_mouse_over("th");
-    apply_mouse_over("#login_Page");
-    apply_modal_on_click();
-    apply_validator_class();
+        //These are temporary 
+        apply_mouse_over("th");
+        apply_mouse_over("#login_Page"); 
+        apply_modal_on_click();
+        apply_validator_class();
 
-    $.ajax({
-        type: "GET",
-        url: "",
-        data: emp_id,
-        dataType: "json",
-        success: function (data, status, xhr) {
-            var obj_parsed = JSON.parse(data);
-            if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200 && data) {
-                if (!(obj_parsed.Success)) {
-                    switch (obj_parsed.Error) {
-                        default:
-                            alerts("alert-warning", "An Error has Occured!");
-                    }
-                } else {
-                    if ($.isEmptyObject(data)) {
-                        alert_warning("alert-warning", "There are no reimbursments that you can view at this time. If this is an issue please call!");
+        $.ajax({
+            type: "GET",
+            url: "",
+            data: emp_id,
+            dataType: "json",
+            success: function (data, status, xhr) {
+                var obj_parsed = JSON.parse(data);
+                if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200 && data) {
+                    if (!(obj_parsed.Success)) {
+                        switch (obj_parsed.Error) {
+                            default:
+                                alerts("alert-warning", "An Error has Occured!");
+                        }
                     } else {
-                        create_reimbursements_assigned(),
-                        apply_modal_on_click();
-                        apply_mouse_over("th");
-                        apply_mouse_over("#login_Page");
-                        apply_validator_class()
+                        if ($.isEmptyObject(data)) {
+                            alert_warning("alert-warning", "There are no reimbursments that you can view at this time. If this is an issue please call!");
+                        } else {
+                            create_reimbursements_assigned()
+                            apply_mouse_over("th");
+                            apply_mouse_over("#login_Page");
+                            apply_modal_on_click();
+                            apply_validator_class()
+                        }
                     }
                 }
+            },
+            error: function (data) {
+                if (typeof (Storage) !== "undefined") {
+                    localStorage.setItem("Error", data);
+                } else {
+                    //For browsers that do not have webstorage
+                    console.log(data)
+                }
             }
-        },
-        error: function (data) {
-            if (typeof (Storage) !== "undefined") {
-                localStorage.setItem("Error", data);
-            } else {
-                //For browsers that do not have webstorage
-                console.log(data)
-            }
-        }
-    })
+        })
+    });
 });
 
 function create_reimbursements_assigned() {
@@ -104,14 +106,6 @@ function apply_modal_on_click() {
         $("#program_End").val(obj.approved);
 
         $("#reimbursment_Number").hide();
-
-        var submission = ($("#submission").val($(this).closest('tr').children()[8].textContent)).attr("id");
-        if ($("#" + submission).val() == "No") {
-            $("#add_Information").show();
-        } else {
-            $("#add_Information").hide();
-        }
-
         $(".top_title").empty();
         $(".top_title").append("Editing " + obj.first_name + " " + obj.last_name + " reimbursment")
     });
