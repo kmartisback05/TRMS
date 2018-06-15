@@ -8,9 +8,11 @@
     }
 
     //TEMPORARY DELETE DURING PRODUCTION
+    var fake_obj = {};
+    create_reimbursements_assigned(fake_obj)
+    apply_modal_on_click(fake_obj);
     apply_mouse_over("th");
     apply_mouse_over("#login_Page");
-    apply_modal_on_click();
     apply_validator_class();
     //TEMPORARY DELETE DURING PRODUCTION
 
@@ -71,85 +73,87 @@ function create_reimbursements_assigned(obj_parsed) {
             "<td>" + obj_parsed.status + "</td>" +
             "</tr>");
     }
-
-function apply_validator_class() {
-    $("#meetingForm input, #meetingForm select").each(function () {
-        $(this).attr("validation_Group", "validator");
-    })
 }
 
-function apply_modal_on_click(obj_parsed) {
-    $('table tbody tr td').on('click', function () {
-        $("#myModal").modal("show");
+    function apply_validator_class() {
+        $("#meetingForm input, #meetingForm select").each(function () {
+            $(this).attr("validation_Group", "validator");
+        })
+    }
 
-        $("#reimbursment_Number").val($(this).closest('tr').children()[0].textContent);
-        $("#name").val($(this).closest('tr').children()[1].textContent);
-        $("#department_Name").val($(this).closest('tr').children()[2].textContent);
-        $("#phone").val($(this).closest('tr').children()[3].textContent);
+    function apply_modal_on_click(obj_parsed) {
+        $('table tbody tr td').on('click', function () {
+            $("#myModal").modal("show");
 
-        $("#email").val($(this).closest('tr').children()[4].textContent);
-        $("#type").val($(this).closest('tr').children()[5].textContent);
-        $("#amount").val($(this).closest('tr').children()[6].textContent);
+            $("#reimbursment_Number").val($(this).closest('tr').children()[0].textContent);
+            $("#reimbursment_Number").hide();
+            $("#name").val($(this).closest('tr').children()[1].textContent);
+            $("#department_Name").val($(this).closest('tr').children()[2].textContent);
+            $("#phone").val($(this).closest('tr').children()[3].textContent);
 
-        $("#step").val($(this).closest('tr').children()[7].textContent);
-        $("#submission").val($(this).closest('tr').children()[8].textContent);
-        $("#status").val($(this).closest('tr').children()[9].textContent);
+            $("#email").val($(this).closest('tr').children()[4].textContent);
+            $("#type").val($(this).closest('tr').children()[5].textContent);
+            $("#amount").val($(this).closest('tr').children()[6].textContent);
 
-        //To grab the other info by using the rem-id
-        var obj = {};
+            $("#step").val($(this).closest('tr').children()[7].textContent);
+            $("#submission").val($(this).closest('tr').children()[8].textContent);
+            $("#status").val($(this).closest('tr').children()[9].textContent);
 
-        obj["reimbursment_Number"] = obj_parsed.reimbursment_Number;
+            //To grab the other info by using the rem-id
+            var obj = {};
 
-        var obj_Stringify = JSON.stringify(obj);
-        $.ajax({
-            type: "GET",
-            url: "",
-            data: obj_Stringify,
-            dataType: "json",
-            success: function (data, status, xhr) {
-                var obj_parsed_Second = JSON.parse(data);
-                if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200 && data) {
-                    if (!(obj_parsed_Second.Success)) {
-                        switch (obj_parsed_Second.Error) {
-                            default:
-                                alerts("alert-warning", "An Error has Occured!");
-                        }
-                    } else {
-                        if ($.isEmptyObject(obj_parsed_Second)) {
-                            alert_warning("alert-warning", "There are no reimbursments that you can view at this time. If this is an issue please call!");
+            obj["reimbursment_Number"] = obj_parsed.reimbursment_Number;
+
+            var obj_Stringify = JSON.stringify(obj);
+            $.ajax({
+                type: "GET",
+                url: "",
+                data: obj_Stringify,
+                dataType: "json",
+                success: function (data, status, xhr) {
+                    var obj_parsed_Second = JSON.parse(data);
+                    if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200 && data) {
+                        if (!(obj_parsed_Second.Success)) {
+                            switch (obj_parsed_Second.Error) {
+                                default:
+                                    alerts("alert-warning", "An Error has Occured!");
+                            }
                         } else {
-                            
-                            $("#address").val(obj_parsed_Second.address);
-                            $("#city").val(obj_parsed_Second.city);
-                            $("#state").val(obj_parsed_Second.state);
-                            $("#zipcode").val(obj_parsed_Second.zipcode);
+                            if ($.isEmptyObject(obj_parsed_Second)) {
+                                alert_warning("alert-warning", "There are no reimbursments that you can view at this time. If this is an issue please call!");
+                            } else {
 
-                            $("#location").val(obj_parsed_Second.location);
-                            $("#description").val(obj_parsed_Second.description);
-                            $("#approved").val(obj_parsed_Second.approved);
+                                $("#address").val(obj_parsed_Second.address);
+                                $("#city").val(obj_parsed_Second.city);
+                                $("#state").val(obj_parsed_Second.state);
+                                $("#zipcode").val(obj_parsed_Second.zipcode);
 
-                            $("#justification").val(obj_parsed_Second.justification);
-                            $("#program_Start_Date").val(obj.program_Start_Date);
-                            $("#program_End_State").val(obj_parsed_Second.program_End_Date);
+                                $("#location").val(obj_parsed_Second.location);
+                                $("#description").val(obj_parsed_Second.description);
+                                $("#approved").val(obj_parsed_Second.approved);
 
-                            $("#reimbursment_Number").hide();
-                            $(".top_title").empty();
-                            $(".top_title").append("Editing " + obj_parsed.first_name + " " + obj_parsed.last_name + " reimbursment")
+                                $("#justification").val(obj_parsed_Second.justification);
+                                $("#program_Start_Date").val(obj.program_Start_Date);
+                                $("#program_End_State").val(obj_parsed_Second.program_End_Date);
+
+                                $(".top_title").empty();
+                                $(".top_title").append("Editing " + obj_parsed.first_name + " " + obj_parsed.last_name + " reimbursment")
+                            }
                         }
                     }
+                },
+                error: function (data) {
+                    if (typeof (Storage) !== "undefined") {
+                        localStorage.setItem("Error", data);
+                    } else {
+                        //For browsers that do not have webstorage
+                        console.log(data)
+                    }
                 }
-            },
-            error: function (data) {
-                if (typeof (Storage) !== "undefined") {
-                    localStorage.setItem("Error", data);
-                } else {
-                    //For browsers that do not have webstorage
-                    console.log(data)
-                }
-            }
-        });
-    }
-)}
+            });
+        }
+    )
+}
 
 
 function apply_mouse_over(element) {
