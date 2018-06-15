@@ -1,17 +1,15 @@
 ﻿$(document).ready(function () {
     if (typeof (Storage) !== "undefined") {
-        var first_name = localStorage.getItem("first_name");
-        var last_name = localStorage.getItem("last_name");
+        var first_Name = localStorage.getItem("first_Name");
+        var last_Name = localStorage.getItem("last_Name");
         var amount = localStorage.getItem("amount");
     } else {
         //No Storage so I store it in a cookie for now
-        var emp_id = Cookies.get('emp_id');
-        var first_name = Cookies.get('first_name');
-        var last_name = Cookies.get('last_name');
-        var department_name = Cookies.get('department_name');
+        var first_Name = Cookies.get('first_Name');
+        var last_Name = Cookies.get('last_Name');
         var amount = Cookies.get('amount');
     }
 
     //This sets the navbar on load
-    $("#Username").text(first_name + " " + last_name + ", you have $" + amount + " left in till 01/01/2019");
+    $("#Username").text(first_Name + " " + last_Name + ", you have $" + amount + " left in till 01/01/2019");
 });

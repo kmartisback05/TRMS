@@ -24,10 +24,20 @@
         var response;
         xhttp.onreadystatechange = function() {
         	if(this.readyState == 4 && this.status == 200) {
-        		response = xhttp.getResponseHeader("employee_id");
-        		alert(response);
+        		response = xhttp.getResponseHeader("emp_Id");
+        		var id = parseInt(response);
+        		//alert("Id = "+id);
+        		if(id == -1) {
+        			alert("Invalid username or password! Please try again.");
+        			location.reload();
+        		} else {
+        			//alert("Login successful!");
+        			localStorage.setItem("employee_id", response);
+        			window.location.href = "http://localhost:8080/TRMS/home";
+        		}
         	}
         }
+        
            // }); //end $.ajax function
     }); //end submit function
 }); //end ready function

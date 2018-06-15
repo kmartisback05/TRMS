@@ -37,46 +37,14 @@ public class LoginServlet extends HttpServlet {
 		String[] arr = getServletContext().getInitParameter("dbInfo").split(",");
 		System.out.println("Inside doPost of login servlet");
 		
-		/*Enumeration<String> paramNames = request.getParameterNames();
-		List<String> paramNamesList = new ArrayList<String>();
-		List<String> paramValuesList = new ArrayList<String>();
-		Gson gson = new Gson();
 		
-		while(paramNames.hasMoreElements()) {
-			String paramName = paramNames.nextElement();
-			paramNamesList.add(paramName);
-		}
-		
-		String str = paramNamesList.get(0);
-		//System.out.println(str);
-		
-		String formatStr = str.replaceAll("[^a-zA-Z0-9:,]","");
-		//System.out.println(formatStr);
-
-		String [] pairs = formatStr.split(",");
-		
-		HashMap<String, String> map = new HashMap<String, String>();
-		for(int i=0; i<pairs.length; i++) {
-			String [] keyVals = pairs[i].split(":");
-			map.put(keyVals[0], keyVals[1]);
-		}
-		
-		String username = map.get("username");
-		String password = map.get("password");
-		
-		System.out.println(username);
-		System.out.println(password);*/
-		String username = request.getParameter("username");
-		//System.out.println(username);
-		String password = request.getParameter("password");
-		//System.out.println(password);
-		//response.sendRedirect("home");
-		//System.out.println("Redirect called!");
 	
+		/*String username = request.getParameter("username");
+		String password = request.getParameter("password");
 		Service service = new Service(arr);
 		int id = service.checkLoginCredentials(username, password);
 		System.out.println(id);
-		response.addIntHeader("employee_id", id);
+		response.addHeader("employee_id", Integer.toString(id));*/
 	}
 
 }

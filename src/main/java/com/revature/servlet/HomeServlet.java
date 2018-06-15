@@ -14,8 +14,6 @@ public class HomeServlet extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("Inside doGet of home servlet");
-		//RequestDispatcher rd = request.getRequestDispatcher("Home.html");
-		//rd.forward(request, response);
 		request.getRequestDispatcher("Home.html").forward(request, response);
 	}
 

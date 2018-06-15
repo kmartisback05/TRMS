@@ -1,95 +1,29 @@
 ﻿var validated_Fields;
 $(document).ready(function () {
     if (typeof (Storage) !== "undefined") {
-        //var department_Name = Cookies.get('step');
+        // var department_Name = Cookies.get('step');
+        // var emp_Id_Key = Cookies.get('emp_Id');
     } else {
         //No Storage so I store it in a cookie for now
         //var department_Name = Cookies.get('step');
+        //var emp_Id_Key = Cookies.get('emp_Id');
     }
 
+    apply_validator_class();
     validate_blur();
     validate_on_key_up();
     submit_form();
 })
 
-function validate_blur() {
-    $(".blur_event").blur(function(){
-        validation.call(this);
+function apply_validator_class() {
+
+    $("#rem_form input, #rem_form select").each(function () {
+        $(this).attr("validation_Group", "validator");
     })
 }
 
 var validation = function () {
     switch ($(this).attr("id")) {
-        case "name":
-            var regex = /^[a-zA-Z]+$/;
-            hide_errors("#display_Error_Name", $("#" + $(this).attr("id")));
-            if ($(this).val().length == 0) {
-                $("#display_Error_Name").append("Can not be empty!");
-                $("#" + $(this).attr("id")).addClass("is-invalid");
-            } else if ($(this).val().length > 25) {
-                $("#display_Error_Name").append("Too many characters!");
-                $("#" + $(this).attr("id")).addClass("is-invalid");
-            } else if ($(this).val().length < 2) {
-                $("#display_Error_Name").append("Not enough characters!");
-                $("#" + $(this).attr("id")).addClass("is-invalid");
-            } else if (false) {
-                //$("#display_Error_Name").append("Name needs correct format!");
-                //$("#" + $(this).attr("id")).addClass("is-invalid");
-            } else {
-                hide_errors("#display_Error_Name", $("#" + $(this).attr("id")));
-                validated_Fields++;
-            }
-            break;
-        case "department_Name":
-            hide_errors("#display_Error_Department_Name", $("#" + $(this).attr("id")));
-            if (($(this).val() || '').length == 0) {
-                $("#display_Error_Department_Name").append("Can not be empty!");
-                $("#" + $(this).attr("id")).addClass("is-invalid");
-            } else {
-                hide_errors("#display_Error_Department_Name", $("#" + $(this).attr("id")));
-                validated_Fields++;
-            }
-            break;
-        case "phone":
-            var regex = /^[a-zA-Z]+$/;
-            hide_errors("#display_Error_Phone", $("#" + $(this).attr("id")));
-            if ($(this).val().length == 0) {
-                $("#display_Error_Phone").append("Can not be empty!");
-                $("#" + $(this).attr("id")).addClass("is-invalid");
-            } else if ($(this).val().length > 60) {
-                $("#display_Error_Phone").append("Not enough numbers!");
-                $("#" + $(this).attr("id")).addClass("is-invalid");
-            } else if ($(this).val().length < 2) {
-                $("#display_Error_Phone").append("Too few of numbers!");
-                $("#" + $(this).attr("id")).addClass("is-invalid");
-            } else if (false) {
-                //$("#display_Error_Phone").append("Phone needs correct format!");
-                //$("#" + $(this).attr("id")).addClass("is-invalid");
-            } else {
-                hide_errors("#display_Error_Phone", $("#" + $(this).attr("id")));
-                validated_Fields++;
-            }
-            break;
-        case "email":
-            var regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-            hide_errors("#display_Error_Email", $("#" + $(this).attr("id")));
-            if ($(this).val().length == 0) {
-                $("#display_Error_Email").append("Can not be empty!");
-                $("#" + $(this).attr("id")).addClass("is-invalid");
-            } else if ($(this).val().length > 60) {
-                $("#display_Error_Email").append("Too many characters!");
-                $("#" + $(this).attr("id")).addClass("is-invalid");
-            } else if ($(this).val().length < 2) {
-                $("#display_Error_Email").append("Not enoungh characters!");
-                $("#" + $(this).attr("id")).addClass("is-invalid");
-            } else if (false) {
-                //$("#display_Error_Email").append("Email needs correct format!");
-                //$("#" + $(this).attr("id")).addClass("is-invalid");
-            } else {
-                hide_errors("#display_Error_Email", $("#" + $(this).attr("id")));
-                validated_Fields++;
-            }
-            break;
         case "type":
             hide_errors("#display_Error_Type", $("#" + $(this).attr("id")));
             if (($(this).val() || '').length == 0) {
@@ -117,115 +51,6 @@ var validation = function () {
                 //$("#" + $(this).attr("id")).addClass("is-invalid");
             } else {
                 hide_errors("#display_Error_Amount", $("#" + $(this).attr("id")));
-                validated_Fields++;
-            }
-            break;
-        case "step":
-            hide_errors("#display_Error_Step", $("#" + $(this).attr("id")));
-            if (($(this).val() || '').length == 0) {
-                $("#display_Error_Step").append("Can not be empty!");
-                $("#" + $(this).attr("id")).addClass("is-invalid");
-            } else {
-                hide_errors("#display_Error_Step", $("#" + $(this).attr("id")));
-                validated_Fields++;
-            }
-            break;
-        case "submission":
-            hide_errors("#display_Error_Submission", $("#" + $(this).attr("id")));
-            if (($(this).val() || '').length == 0) {
-                $("#display_Error_Submission").append("Can not be empty!");
-                $("#" + $(this).attr("id")).addClass("is-invalid");
-            } else {
-                hide_errors("#display_Error_Step", $("#" + $(this).attr("id")));
-                validated_Fields++;
-            }
-            break;
-        case "status":
-            hide_errors("#display_Error_Status", $("#" + $(this).attr("id")));
-            if (($(this).val() || '').length == 0) {
-                $("#display_Error_Status").append("Can not be empty!");
-                $("#" + $(this).attr("id")).addClass("is-invalid");
-            } else {
-                hide_errors("#display_Error_Status", $("#" + $(this).attr("id")));
-                validated_Fields++;
-            }
-            break;
-        case "address":
-            var regex = /^[a-zA-Z0-9]+$/;
-            hide_errors("#display_Error_Address", $("#" + $(this).attr("id")));
-            if ($(this).val().length == 0) {
-                $("#display_Error_Address").append("Can not be empty!");
-                $("#" + $(this).attr("id")).addClass("is-invalid");
-            } else if ($(this).val().length > 60) {
-                $("#display_Error_Address").append("Has too many characters!");
-                $("#" + $(this).attr("id")).addClass("is-invalid");
-            } else if ($(this).val().length < 6) {
-                $("#display_Error_Address").append("Has too few of characters!");
-                $("#" + $(this).attr("id")).addClass("is-invalid");
-            } else if (false) {
-                //$("#display_Error_Address").append("Address needs correct format!");
-                //$("#" + $(this).attr("id")).addClass("is-invalid");
-            } else {
-                hide_errors("#display_Error_Address", $("#" + $(this).attr("id")));
-                validated_Fields++;
-            }
-        case "city":
-            var regex = /^[a-zA-Z]+$/;
-            hide_errors("#display_Error_City", $("#" + $(this).attr("id")));
-            if ($(this).val().length == 0) {
-                $("#display_Error_City").append("Can not be empty!");
-                $("#" + $(this).attr("id")).addClass("is-invalid");
-            } else if ($(this).val().length > 60) {
-                $("#display_Error_City").append("Has too many characters!");
-                $("#" + $(this).attr("id")).addClass("is-invalid");
-            } else if ($(this).val().length < 6) {
-                $("#display_Error_City").append("Has too few of characters!");
-                $("#" + $(this).attr("id")).addClass("is-invalid");
-            } else if (false) {
-                //$("#display_Error_City").append("City needs correct format!");
-                //$("#" + $(this).attr("id")).addClass("is-invalid");
-            } else {
-                hide_errors("#display_Error_City", $("#" + $(this).attr("id")));
-                validated_Fields++;
-            }
-            break;
-        case "state":
-            var regex = /^[a-zA-Z]+$/;
-            hide_errors("#display_Error_State", $("#" + $(this).attr("id")));
-            if (($(this).val() || '').length == 0) {
-                $("#display_Error_State").append("Can not be empty!");
-                $("#" + $(this).attr("id")).addClass("is-invalid");
-            } else if ($(this).val().length > 60) {
-                $("#display_Error_State").append("Has too many characters!");
-                $("#" + $(this).attr("id")).addClass("is-invalid");
-            } else if ($(this).val().length < 5) {
-                $("#display_Error_State").append("Has too few of characters!");
-                $("#" + $(this).attr("id")).addClass("is-invalid");
-            } else if (false) {
-                //$("#display_Error_State").append("State needs correct format!");
-                //$("#" + $(this).attr("id")).addClass("is-invalid");
-            } else {
-                hide_errors("#display_Error_State", $("#" + $(this).attr("id")));
-                validated_Fields++;
-            }
-            break;
-        case "zipcode":
-            var regex = /^[0-9]+$/;
-            hide_errors("#display_Error_Zipcode", $("#" + $(this).attr("id")));
-            if ($(this).val().length == 0) {
-                $("#display_Error_Zipcode").append("Can not be empty!");
-                $("#" + $(this).attr("id")).addClass("is-invalid");
-            } else if ($(this).val().length > 5) {
-                $("#display_Error_Zipcode").append("Has too many characters!");
-                $("#" + $(this).attr("id")).addClass("is-invalid");
-            } else if ($(this).val().length < 5) {
-                $("#display_Error_Zipcode").append("Has too few of characters!");
-                $("#" + $(this).attr("id")).addClass("is-invalid");
-            } else if (false) {
-                //$("#display_Error_State").append("State needs correct format!");
-                //$("#" + $(this).attr("id")).addClass("is-invalid");
-            } else {
-                hide_errors("#display_Error_Zipcode", $("#" + $(this).attr("id")));
                 validated_Fields++;
             }
             break;
@@ -358,24 +183,18 @@ var validation = function () {
                 validated_Fields++;
             }
             break;
-        case "approved":
-            var regex = /[a-zA-Z]/;
-            hide_errors("#display_Error_Approved", $("#" + $(this).attr("id")));
-            if (($(this).val() || '').length == 0) {
-                $("#display_Error_Approved").append("Can not be empty!");
-                $("#" + $(this).attr("id")).addClass("is-invalid");
-            } else {
-                hide_errors("#display_Error_Approved", $("#" + $(this).attr("id")));
-                validated_Fields++;
-            }
-            break;
-        default:
     }
     return validated_Fields;
 }
 
+function validate_blur() {
+    $(".blur_event").blur(function () {
+        validation.call(this);
+    })
+}
+
 function validate_on_key_up() {
-    $("#meetingForm input, #meetingForm select").each(function () {
+    $("#rem_form input, #rem_form select").each(function () {
         $(this).keyup(function () {
             validation.call(this);
         })
@@ -390,8 +209,10 @@ function submit_form() {
             validation.call(this);
         })
 
-        if (validated_Fields == 20) {
-            var obj = {};
+        if (validated_Fields == 8) {
+            var obj = {
+                emp_Id: emp_Id_Key
+            };
 
             $(".submitable").each(function () {
                 var id = $(this).attr("id");
@@ -422,11 +243,7 @@ function submit_form() {
                                     alerts("alert-warning", "An Error has Occured! Please Try Again!");
                             }
                         } else {
-                            alerts("alert-success", "Changes that have been submitted have been saved!");
-                            $('#myModal').modal('toggle');
-                            setTimeout(function () {
-                                location.reload();
-                            }, 4000);
+                            alerts("alert-success", "Form has been submitted!");
                         }
                     }
                 },
@@ -440,10 +257,11 @@ function submit_form() {
                 }
             })
         } else {
-            alerts("alert-warning", "There was errors in submitting the edits, and in result no <b>edits</b> were made. Please try again!");
+            alerts("alert-warning", "There was errors in submitting the form. Please try again!");
         }
     })
 }
+
 
 function hide_errors(id, input) {
     $(input).removeClass("is-invalid");
