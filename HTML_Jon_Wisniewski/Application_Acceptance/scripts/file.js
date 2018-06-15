@@ -1,9 +1,16 @@
 ﻿var validated_Fields;
 $(document).ready(function () {
+    go_back();
     file_change();
     submit_validation();
     keyup_validation();
 });
+
+function go_back() {
+    $("#close").click(function () {
+        $('#myModal').modal('show');
+    })
+}
 
 var validation = function () {
     switch ($(this).attr("id")) {

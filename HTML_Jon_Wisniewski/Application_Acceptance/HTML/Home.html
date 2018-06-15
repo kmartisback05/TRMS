@@ -23,6 +23,7 @@
     <script src="../scripts/navigation_fields.js"></script>
     <script src="../scripts/reimbursment_table.js"></script>
     <script src="../scripts/idle.js"></script>
+    <script src="../scripts/refresh.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
     <script>
@@ -92,7 +93,7 @@
                                             <th scope="col">Phone # <i class="fa fa-fw fa-sort" /></th>
                                             <th scope="col">Company Email <i class="fa fa-fw fa-sort" /></th>
                                             <th scope="col">Type <i class="fa fa-fw fa-sort" /></th>
-                                            <th scope="col">Amount <i class="fa fa-fw fa-sort" /></th>
+                                            <th scope="col">Amount ($)<i class="fa fa-fw fa-sort" /></th>
                                             <th scope="col">Approval Step <i class="fa fa-fw fa-sort" /></th>
                                             <th scope="col">Submission<i class="fa fa-fw fa-sort" /></th>
                                             <th scope="col">Status <i class="fa fa-fw fa-sort" /></th>
@@ -141,7 +142,7 @@
                         </div>
                         <div class="row"> 
                             <div class="col-lg-12">
-                                <a href="#" class="btn btn-primary my-sma-btn">Refresh</a>
+                                <a href="#" id="refresh" class="btn btn-primary my-sma-btn">Refresh</a>
                             </div>
                         </div>
                     </div>
@@ -181,7 +182,7 @@
                     </div>                     
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" id="submit_Submission">Save changes</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" id="close" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>

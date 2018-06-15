@@ -133,8 +133,9 @@ function create_reimbursements_assigned(obj_parsed) {
                                 $("#approved").val(obj_parsed_Second.approved);
 
                                 $("#justification").val(obj_parsed_Second.justification);
-                                $("#program_Start_Date").val(obj.program_Start_Date);
-                                $("#program_End_State").val(obj_parsed_Second.program_End_Date);
+                                $("#program_Start").val(obj.program_Start_Date);
+                                $("#program_End").val(obj_parsed_Second.program_End_Date);
+                                $("#work_Missed").val(obj_parsed_Second.work_Missed);
 
                                 $(".top_title").empty();
                                 $(".top_title").append("Editing " + obj_parsed.first_name + " " + obj_parsed.last_name + " reimbursment")

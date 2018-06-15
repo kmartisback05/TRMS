@@ -134,8 +134,9 @@ function apply_modal_on_click(obj_parsed) {
                             $("#approved").val(obj_parsed_Second.approved);
 
                             $("#justification").val(obj_parsed_Second.justification);
-                            $("#program_Start_Date").val(obj.program_Start_Date);
-                            $("#program_End_State").val(obj_parsed_Second.program_End_Date);
+                            $("#program_Start").val(obj.program_Start_Date);
+                            $("#program_End").val(obj_parsed_Second.program_End_Date);
+                            $("#work_Missed").val(obj_parsed_Second.work_Missed);
 
                             $("#reimbursment_Number").hide();
                             $(".top_title").empty();
