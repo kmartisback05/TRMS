@@ -69,7 +69,7 @@ function submit_validation() {
 
             $(".submitable").each(function () {
                 var id = $(this).attr("id");
-                obj.id = $(this).val();
+                obj[id] = $(this).val();
             })
 
             if ($("#file_upload".val()) == "") {

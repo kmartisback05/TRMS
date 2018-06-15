@@ -1,10 +1,10 @@
 ﻿var validated_Fields;
 $(document).ready(function () {
     if (typeof (Storage) !== "undefined") {
-       // var department_Name = Cookies.get('step');
+        var department_Name = Cookies.get('step');
     } else {
         //No Storage so I store it in a cookie for now
-        //var department_Name = Cookies.get('step');
+        var department_Name = Cookies.get('step');
     }
 
     validate_blur();
@@ -424,6 +424,9 @@ function submit_form() {
                         } else {
                             alerts("alert-success", "Changes that have been submitted have been saved!");
                             $('#myModal').modal('toggle');
+                            setTimeout(function () {
+                                location.reload();
+                            }, 4000);
                         }
                     }
                 },

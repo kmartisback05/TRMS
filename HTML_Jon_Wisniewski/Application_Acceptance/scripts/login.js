@@ -13,10 +13,9 @@
         if (password === "" || username === "") {
             alerts("alert-warning", "Enter Username and Password!");
         } else {
-            var obj = {
-                "username": username,
-                "password": password
-            };
+            var obj = {};
+            obj["username"] = username;
+            obj["password"] = password;
 
             var obj_Stringify = JSON.stringify(obj)
             $.ajax({

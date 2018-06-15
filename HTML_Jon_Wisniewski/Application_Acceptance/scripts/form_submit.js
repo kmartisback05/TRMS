@@ -2,9 +2,11 @@
 $(document).ready(function () {
     if (typeof (Storage) !== "undefined") {
         // var department_Name = Cookies.get('step');
+        // var emp_Id_Key = Cookies.get('emp_Id');
     } else {
         //No Storage so I store it in a cookie for now
         //var department_Name = Cookies.get('step');
+        //var emp_Id_Key = Cookies.get('emp_Id');
     }
 
     apply_validator_class();
@@ -208,7 +210,9 @@ function submit_form() {
         })
 
         if (validated_Fields == 8) {
-            var obj = {};
+            var obj = {
+                emp_Id: emp_Id_Key
+            };
 
             $(".submitable").each(function () {
                 var id = $(this).attr("id");
